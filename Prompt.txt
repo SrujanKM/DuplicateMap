@@ -1,0 +1,57 @@
+You are a senior Python engineer with experience in GIS, document analysis, and computer vision.
+
+I am working on a land-record digitization project. The task is to detect duplicate or near-duplicate village land map PDFs with very high accuracy (>95%).
+
+Context:
+- PDFs may be:
+  - Scanned copies of paper maps
+  - AutoCAD (.DWG) files converted to PDF
+  - Hybrid PDFs with selectable layers in Adobe Acrobat
+- Image quality can be poor (skewed, low contrast, noise).
+- Each map contains multiple land polygons.
+- Each polygon has a number/ID written in Marathi.
+- PDFs are stored village-wise in folders.
+- Each upload generates a unique ID, even if the same map is uploaded again.
+- Objective is to identify duplicate maps inside the same village folder and log them.
+
+Constraints:
+- We consider only:
+  1) Overall map structure/shape
+  2) Polygon similarity
+  3) Marathi polygon number similarity (OCR)
+- OCR errors are expected, so solution must be tolerant.
+- Do NOT rely on OCR alone.
+- Do NOT assume PDFs are fully vector.
+- Accuracy is more important than speed.
+
+Required Solution:
+Design a Python-based multi-layer duplicate detection pipeline using:
+
+1. PDF → Image conversion (high DPI)
+2. Image preprocessing (noise removal, thresholding)
+3. Structural similarity of whole map (SSIM)
+4. Polygon extraction using OpenCV contours
+5. Polygon shape comparison using IoU (Shapely)
+6. Marathi OCR using Tesseract (as a supporting signal)
+7. Weighted final similarity score:
+   - Structural similarity: 40%
+   - Polygon similarity: 40%
+   - Text similarity: 20%
+8. If final similarity ≥ 95%, mark as DUPLICATE.
+9. Use first PDF in village folder as reference and compare rest.
+10. Store results in a CSV or log file.
+
+Deliverables:
+- Clear explanation of the approach
+- Folder structure
+- Python code snippets for each step
+- Final comparison logic
+- Logging format
+- Best practices to improve accuracy with poor scans
+
+Do NOT:
+- Use Tesseract as the primary comparison method
+- Assume perfect OCR or perfect geometry
+- Give only theory without implementation
+
+Explain like you are designing this for a government land-record system with real-world imperfections.
